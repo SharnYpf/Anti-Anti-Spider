@@ -64,6 +64,7 @@ def insert_ll(install_str,address_ll,conn,cur):
 def get_request(url,headers):
     '''参数引入及头信息'''
     html=requests.get(url,headers=headers, timeout=20).text.decode('utf8')
+    print html
     return html
 
 
@@ -74,9 +75,9 @@ def re_html_code(html_code,proxy_list_json):
     try:
         re_list_ip = re.findall(r'<td>\d*\.\d*\.\d*\.\d*</td>',html_code)
         re_list_port = re.findall(r'<td>[\d]*</td>',html_code)
-        re_list_live_time = re.findall(r'<td>\d*[小时分钟天]*</td>',html_code)
-
-        #print type(html_code),type(r'<td>\d*[小时分钟天]*</td>')
+        re_list_live_time = re.findall(u'<td>\d*[小时分钟天]+</td>',html_code)
+        print re_list_live_time
+        #print type(html_code),type(r'<td>\d*[小时分钟天]+</td>')
         re_list_time = re.findall(r'<td>\d*-\d*-\d* \d*:\d*</td>',html_code)
         #print re_list_ip
         l = len(re_list_ip)
@@ -114,7 +115,7 @@ if __name__ == '__main__':
     except Exception,e:
         print Exception,e
 
-    for i in range(1,3):
+    for i in range(1,2):
         url = "http://www.xicidaili.com/nn/"+str(i)
         print 'begin',url
         try:
